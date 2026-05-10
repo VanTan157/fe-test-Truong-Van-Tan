@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../../App";
 import TasksPage from "../../features/tasks/pages/TasksPage";
+import DashboardPage from "../../features/tasks/pages/DashboardPage";
 
 export const PATHS = {
   DASHBOARD: "/",
@@ -14,10 +15,9 @@ export const router = createBrowserRouter([
 
     children: [
       {
-        path: PATHS.DASHBOARD,
-        element: <div>Dashboard</div>,
+        index: true,
+        element: <DashboardPage />,
       },
-
       {
         path: PATHS.TASKS,
         element: <TasksPage />,
