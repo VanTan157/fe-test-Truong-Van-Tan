@@ -1,5 +1,6 @@
-import { Layout, Menu } from "antd";
+import { Layout } from "antd";
 import { Link, Outlet } from "react-router-dom";
+import { PATHS } from "./app/router";
 
 const { Header, Content } = Layout;
 
@@ -8,21 +9,12 @@ function App() {
     <Layout className="min-h-screen">
       <Header className="flex items-center">
         <div className="text-white text-xl font-bold mr-10">TaskBoard</div>
-
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          items={[
-            {
-              key: "dashboard",
-              label: <Link to="/">Dashboard</Link>,
-            },
-            {
-              key: "tasks",
-              label: <Link to="/tasks">Tasks</Link>,
-            },
-          ]}
-        />
+        <Link to={PATHS.DASHBOARD} className="text-white mr-4">
+          Dashboard
+        </Link>
+        <Link to={PATHS.TASKS} className="text-white">
+          Tasks
+        </Link>
       </Header>
 
       <Content className="p-6">
