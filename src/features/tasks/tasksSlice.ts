@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { PaginationState, Task, TaskFilters } from "../../types/task";
 import { mockTasks } from "./mockData";
+import { toast } from "sonner";
 
 interface TasksState {
   items: Task[];
@@ -31,6 +32,7 @@ const tasksSlice = createSlice({
   reducers: {
     addTask: (state, action: PayloadAction<Task>) => {
       state.items.unshift(action.payload);
+      toast.success("Task added successfully");
     },
 
     updateTask: (state, action: PayloadAction<Task>) => {
@@ -40,17 +42,20 @@ const tasksSlice = createSlice({
 
       if (index !== -1) {
         state.items[index] = action.payload;
+        toast.success("Task updated successfully");
       }
     },
 
     deleteTask: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((task) => task.id !== action.payload);
+      toast.success("Task deleted successfully");
     },
 
     deleteManyTasks: (state, action: PayloadAction<string[]>) => {
       state.items = state.items.filter(
         (task) => !action.payload.includes(task.id),
       );
+      toast.success("Tasks deleted successfully");
     },
 
     updateTaskStatus: (
@@ -64,6 +69,7 @@ const tasksSlice = createSlice({
 
       if (task) {
         task.status = action.payload.status;
+        toast.success("Task status updated successfully");
       }
     },
 
@@ -83,6 +89,7 @@ const tasksSlice = createSlice({
         priority: null,
         dateRange: [null, null],
       };
+      state.pagination.currentPage = 1;
     },
 
     setPage: (state, action: PayloadAction<number>) => {

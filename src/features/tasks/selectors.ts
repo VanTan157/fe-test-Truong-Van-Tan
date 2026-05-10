@@ -4,6 +4,10 @@ import dayjs from "dayjs";
 import type { RootState } from "../../store/store";
 import { TASK_STATUS } from "../../types/task";
 
+import isBetween from "dayjs/plugin/isBetween";
+
+dayjs.extend(isBetween);
+
 export const selectTasksState = (state: RootState) => state.tasks;
 
 export const selectAllTasks = createSelector(
@@ -31,8 +35,12 @@ export const selectFilteredTasks = createSelector(
         !filters.dateRange[0] ||
         !filters.dateRange[1] ||
         (task.dueDate &&
-          dayjs(task.dueDate).isAfter(filters.dateRange[0]) &&
-          dayjs(task.dueDate).isBefore(filters.dateRange[1]));
+          dayjs(task.dueDate).isBetween(
+            filters.dateRange[0],
+            filters.dateRange[1],
+            "day",
+            "[]",
+          ));
 
       return matchesSearch && matchesStatus && matchesPriority && matchesDate;
     });
