@@ -6,6 +6,7 @@ import { selectAllTasks, selectTaskStats } from "../selectors";
 import StatusTag from "../../../components/common/StatusTag";
 import type { TaskPriority, TaskStatus } from "../../../types/task";
 import PriorityTag from "../../../components/common/PriorityTag";
+import EmptyState from "../../../components/common/EmptyState";
 
 function DashboardPage() {
   const stats = useAppSelector(selectTaskStats);
@@ -90,6 +91,9 @@ function DashboardPage() {
           rowKey="id"
           pagination={false}
           dataSource={recentTasks}
+          locale={{
+            emptyText: <EmptyState />,
+          }}
           columns={[
             {
               title: "Title",

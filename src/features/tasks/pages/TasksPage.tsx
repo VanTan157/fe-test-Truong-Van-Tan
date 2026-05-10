@@ -2,37 +2,85 @@ import { Button, Card, Modal, Select, Space, Table } from "antd";
 
 import dayjs from "dayjs";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   deleteManyTasks,
   deleteTask,
+  setFilter,
   setPage,
   updateTaskStatus,
 } from "../tasksSlice";
 import { selectFilteredTasks, selectPaginatedTasks } from "../selectors";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import type { Task } from "../../../types/task";
+import type { Task, TaskStatus } from "../../../types/task";
 import TaskModal from "../components/TaskModal";
 import TaskFilterBar from "../components/TaskFilterBar";
 import PriorityTag from "../../../components/common/PriorityTag";
 
 import { STATUS_OPTIONS } from "../constants";
+import EmptyState from "../../../components/common/EmptyState";
+import { useSearchParams } from "react-router-dom";
 
 function TasksPage() {
   const dispatch = useAppDispatch();
-
   const tasks = useAppSelector(selectPaginatedTasks);
-
   const filteredTasks = useAppSelector(selectFilteredTasks);
-
+  const filters = useAppSelector((state) => state.tasks.filters);
   const pagination = useAppSelector((state) => state.tasks.pagination);
-
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-
   const [openModal, setOpenModal] = useState(false);
-
   const [editingTask, setEditingTask] = useState<Task | null>(null);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    dispatch(
+      setFilter({
+        searchText: searchParams.get("search") || "",
+
+        status: searchParams.get("status")
+          ? (searchParams.get("status")!.split(",") as TaskStatus[])
+          : [],
+
+        priority: (searchParams.get("priority") as Task["priority"]) || null,
+
+        dateRange: [searchParams.get("from"), searchParams.get("to")],
+      }),
+    );
+
+    dispatch(setPage(Number(searchParams.get("page")) || 1));
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    if (filters.searchText) {
+      params.set("search", filters.searchText);
+    }
+
+    if (filters.status.length > 0) {
+      params.set("status", filters.status.join(","));
+    }
+
+    if (filters.priority) {
+      params.set("priority", filters.priority);
+    }
+
+    if (filters.dateRange[0]) {
+      params.set("from", filters.dateRange[0]);
+    }
+
+    if (filters.dateRange[1]) {
+      params.set("to", filters.dateRange[1]);
+    }
+
+    if (pagination.currentPage > 1) {
+      params.set("page", String(pagination.currentPage));
+    }
+
+    setSearchParams(params);
+  }, [filters, pagination.currentPage, setSearchParams]);
 
   const handleDelete = (id: string) => {
     Modal.confirm({
@@ -166,7 +214,7 @@ function TasksPage() {
             dataSource={tasks}
             columns={columns}
             locale={{
-              emptyText: "No tasks found",
+              emptyText: <EmptyState />,
             }}
             rowSelection={{
               selectedRowKeys,

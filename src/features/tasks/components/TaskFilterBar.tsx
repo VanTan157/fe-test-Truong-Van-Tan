@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { Button, DatePicker, Input, Select, Space } from "antd";
 import debounce from "lodash.debounce";
 import dayjs from "dayjs";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { resetFilters, setFilter } from "../tasksSlice";
 import { PRIORITY_OPTIONS, STATUS_OPTIONS } from "../constants";
@@ -14,6 +15,10 @@ function TaskFilterBar() {
   const filters = useAppSelector((state) => state.tasks.filters);
 
   const [searchText, setSearchText] = useState(filters.searchText);
+
+  useEffect(() => {
+    setSearchText(filters.searchText);
+  }, [filters.searchText]);
 
   const debounceSearch = useMemo(
     () =>
