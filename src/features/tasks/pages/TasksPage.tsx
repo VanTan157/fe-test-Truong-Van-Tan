@@ -177,9 +177,9 @@ function TasksPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Tasks</h1>
+          <h1 className="text-3xl font-bold dark:text-white">Tasks</h1>
 
-          <p className="text-gray-500">Manage your tasks</p>
+          <p className="text-gray-500 dark:text-gray-400">Manage your tasks</p>
         </div>
 
         <Button

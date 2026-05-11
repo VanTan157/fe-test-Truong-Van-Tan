@@ -1,73 +1,262 @@
-# React + TypeScript + Vite
+# TaskBoard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TaskBoard là ứng dụng quản lý công việc nội bộ được xây dựng bằng React + TypeScript theo yêu cầu bài test Frontend Developer.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 18
+- TypeScript 5 (Strict Mode)
+- Redux Toolkit 2
+- React Redux
+- React Router DOM
+- Ant Design 5
+- Tailwind CSS 3
+- Vite
+- Vitest
+- Testing Library
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Features
 
-## Expanding the ESLint configuration
+## Dashboard
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Hiển thị thống kê task:
+  - Total Tasks
+  - Todo
+  - In Progress
+  - Done
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Progress completion
+- Danh sách 5 task mới nhất
+- Responsive layout
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Task Management
+
+### CRUD Task
+
+- Thêm task mới
+- Chỉnh sửa task
+- Xoá task
+- Xoá nhiều task cùng lúc
+
+### Task Table
+
+- Pagination
+- Sorting:
+  - Title
+  - Due Date
+  - Priority
+
+### Inline Update
+
+- Đổi trạng thái task trực tiếp trong table
+
+---
+
+## Search & Filters
+
+- Search theo title
+- Filter theo status
+- Filter theo priority
+- Filter theo due date range
+- Reset filters
+
+Toàn bộ logic filter được xử lý bằng Redux selectors với `createSelector`.
+
+---
+
+## UI / UX
+
+- Responsive layout
+- Empty state
+- Confirm delete modal
+- Reusable components
+- Dark mode toggle
+
+---
+
+## Bonus Features
+
+- Unit test cho selector
+- Unit test cho component
+- Persist filters bằng URL query params
+# TaskBoard
+
+TaskBoard là ứng dụng quản lý công việc nội bộ được xây dựng bằng React + TypeScript theo yêu cầu bài test Frontend Developer.
+
+---
+
+## Tech Stack
+
+- React 18
+- TypeScript 5 (Strict Mode)
+- Redux Toolkit 2
+- React Redux
+- React Router DOM
+- Ant Design 5
+- Tailwind CSS 3
+- Vite
+- Vitest
+- React Testing Library
+
+---
+
+## Installation & Run
+
+### Clone repository
+
+```bash
+git clone https://github.com/VanTan157/fe-test-Truong-Van-Tan.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Install dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+### Run development server
+
+```bash
+npm run dev
+```
+
+Ứng dụng sẽ chạy tại:
+
+```txt
+http://localhost:5173
+```
+
+### Build production
+
+```bash
+npm run build
+```
+
+### Run tests
+
+```bash
+npm run test
+```
+
+---
+
+## Features
+
+### Dashboard
+
+- Hiển thị thống kê task:
+  - Total Tasks
+  - Todo
+  - In Progress
+  - Done
+
+- Progress completion theo trạng thái task
+- Danh sách 5 task được tạo gần nhất
+- Responsive layout
+
+---
+
+### Task Management
+
+#### CRUD Task
+
+- Thêm task mới
+- Chỉnh sửa task
+- Xoá task
+- Xoá nhiều task cùng lúc
+
+#### Task Table
+
+- Pagination
+- Sorting:
+  - Title
+  - Due Date
+  - Priority
+
+#### Inline Update
+
+- Đổi trạng thái task trực tiếp trong table
+
+---
+
+### Search & Filters
+
+- Search theo title
+- Filter theo status
+- Filter theo priority
+- Filter theo due date range
+- Reset filters
+
+Toàn bộ logic filter được xử lý bằng Redux selectors với `createSelector`.
+
+---
+
+### UI / UX
+
+- Responsive layout
+- Loading state
+- Empty state
+- Confirm delete modal
+- Reusable components
+- Dark mode toggle
+
+---
+
+### Bonus Features
+
+- Unit test cho selector
+- Unit test cho component
+- Persist filters bằng URL query params
+
+---
+
+## Redux Architecture
+
+Ứng dụng sử dụng Redux Toolkit với:
+
+- `createSlice`
+- `createSelector`
+- Memoized selectors
+- Typed hooks
+
+Các selectors chính:
+
+- `selectAllTasks`
+- `selectFilteredTasks`
+- `selectPaginatedTasks`
+- `selectTaskStats`
+
+---
+
+## Testing
+
+Ứng dụng sử dụng:
+
+- Vitest
+- React Testing Library
+
+Đã viết test cho:
+
+- Redux selector
+- Reusable component
+
+---
+
+## Screenshots / Demo
+
+### Dashboard
+
+![alt text](image-2.png)
+![alt text](image-3.png)
+
+### Task List
+
+![alt text](image-4.png)
+![alt text](image-5.png)
+![alt text](image-6.png)
+![alt text](image-7.png)
+
